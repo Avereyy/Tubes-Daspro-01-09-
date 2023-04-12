@@ -17,7 +17,7 @@ def generate_seed():
 def kumpul():
     # Generate random quantities of sand, stone, and water
     
-    pasir = RNG(generate_seed(), 41047,1669)
+    pasir = RNG(generate_seed(), 50497,676)
     batu = RNG(generate_seed(), 40031, 107)
     air = RNG(generate_seed(), 30091, 149)
 
