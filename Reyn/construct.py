@@ -72,6 +72,28 @@ def cekstr(dumstring): #cek jika str ada \n
                     newstr[i] += str(dumstring[i][j])
     return newstr
 
+def write(xcsv, data): #menerima input berupa list
+    with open(xcsv, 'a') as csv:
+        csv_line = ';'.join(str(i) for i in data) + '\n'
+        csv.write(csv_line)
+
+
+def edit(xcsv, string, line): #menerima input str dengan parsing ;
+    with open(xcsv) as csv: 
+        data=csv.readlines()
+    if line < length(data):
+        data[line]= f"{string[0]};{string[1]};{string[2]} \n"
+        with open(xcsv, 'w') as csv:
+            csv.writelines(data)
+
+def delete(xcsv, line):
+    with open(xcsv, 'r') as csv:
+        data = csv.readlines()
+    if line < length(data):
+        del data[line]
+        with open(xcsv, 'w') as csv:
+            csv.writelines(data)
+
 #untuk user csv
 with open("user.csv") as file:
     rows = file.readlines()
