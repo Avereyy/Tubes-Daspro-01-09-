@@ -94,6 +94,23 @@ def delete(xcsv, line):
         with open(xcsv, 'w') as csv:
             csv.writelines(data)
 
+def max(list):
+    for i in range(length(list)-1):
+        for j in range(length(list)-1):
+            if list[j] < list[j+1]:
+                list[j],list[j+1] = list[j+1],list[j]
+    max = list[0]
+    return max
+
+def min(list):
+    for i in range(length(list)-1):
+        for j in range(length(list)-1):
+            if list[j] > list[j+1]:
+                list[j],list[j+1] = list[j+1],list[j]
+    min = list[0]
+    return min
+            
+            
 #untuk user csv
 with open("user.csv") as file:
     rows = file.readlines()
