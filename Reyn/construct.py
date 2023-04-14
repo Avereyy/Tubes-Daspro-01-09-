@@ -78,7 +78,7 @@ def write(xcsv, data): #menerima input berupa list
         csv.write(csv_line)
 
 
-def edit(xcsv, string, line): #menerima input str dengan parsing ;
+def edit(xcsv, string, line): #menerima input list
     with open(xcsv) as csv: 
         data=csv.readlines()
     if line < length(data):
