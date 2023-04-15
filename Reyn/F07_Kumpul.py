@@ -1,34 +1,58 @@
-import time
+import random
+def length(lst): #len final 
+    elmt = xappend(lst, "&")
+    count = 0
+    for i in range(100):
+        if elmt[i] == "&":
+            break
+        elif elmt[i] != "&":
+            count += 1
 
-def RNG(xo, a, b): #Pilih 3 parameter, lebih baik jika prima dan besar
-    angka_acak = [0 for i in range(100)]
-    for i in range(99):
-        angka_acak[0] = xo
-        m = 6
-        angka_acak[i+1] = (a * angka_acak[i] +b) % m
+    return count
+def my_join(strings, delimiter): #dari chatgpt
+    result = ""
+    for i in range(length(strings)):
+        result += strings[i]
+        if i != length(strings) - 1:
+            result += delimiter
+    return result
 
-    return(angka_acak[50])
 
-def generate_seed():
-    seed = int(round(time.time() * 1000))
-    return seed
+def xappend(lst1,lst2):
+    lst = [*lst1,*lst2]
+    return lst
 
+def my_split(string, delimiter): #dari Chatgpt
+    substrings = []
+    current_substring = ""
+    for char in string:
+        if char == delimiter:
+            substrings = substrings + [current_substring]
+            current_substring = ""
+        else:
+            current_substring += char
+    substrings = substrings + [current_substring]
+    return substrings
 
 def kumpul():
-    # Generate random quantities of sand, stone, and water
     
-    pasir = RNG(generate_seed(), 50497,676)
-    batu = RNG(generate_seed(), 40031, 107)
-    air = RNG(generate_seed(), 30091, 149)
-
-
-    jml_pasir = 0
-    jml_batu = 0
-    jml_air = 0
-    # Add the generated quantities to the global material counts
-    jml_pasir += pasir
-    jml_batu += batu
-    jml_air += air
-
+    pasir = random.randint(0, 5)
+    batu = random.randint(0, 5)
+    air = random.randint(0, 5)
     print(f"Jin menemukan {pasir} pasir, {batu} batu, dan {air} air.")
-    return jml_air, jml_batu, jml_pasir  #sementara, nanti dimasukkan csv
+    
+    with open("bahan_bangunan.csv", "r") as csvfile:
+        tolist = csvfile.readlines()
+ 
+    for i in range(1, 4):
+        cell = my_split(tolist[i], ",")
+        if cell[0] == "Pasir":
+            cell[2] = str(int(cell[2]) + pasir)
+        elif cell[0] == "Batu":
+            cell[2] = str(int(cell[2]) + batu)
+        elif cell[0] == "air":
+            cell[2] = str(int(cell[2]) + air)
+        tolist[i] = my_join(cell, ",") + '\n'
+
+    with open('bahan_bangunan.csv', 'w') as out:
+        out.writelines(tolist)
