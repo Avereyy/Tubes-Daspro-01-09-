@@ -52,6 +52,6 @@ def bangun():
         global idjin
         idjin += 1
 
-        write("candi.csv", [f"{idjin},{jin},{needed_pasir},{needed_batu},{needed_air}"])
+        write("candi.csv", [f"{idjin};{jin};{needed_pasir};{needed_batu};{needed_air}"])
     else:
         print("Bahan bangunan tidak mencukupi.")
