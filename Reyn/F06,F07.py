@@ -28,6 +28,8 @@ def bahancukup(needed_pasir,needed_batu,needed_air):
     else:
         return False
 
+jin = "setan"
+idjin = 0
 def bangun():
     needed_pasir = random.randint(0, 5)
     needed_batu = random.randint(0, 5)
@@ -46,5 +48,10 @@ def bangun():
         sisa_candi = sisa_candi - 1
 
         print("Candi berhasil dibangun." + f"\nSisa candi yang perlu dibangun: {sisa_candi}.")
+        
+        global idjin
+        idjin += 1
+
+        write("candi.csv", [f"{idjin},{jin},{needed_pasir},{needed_batu},{needed_air}"])
     else:
         print("Bahan bangunan tidak mencukupi.")
