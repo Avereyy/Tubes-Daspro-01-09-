@@ -34,24 +34,30 @@ def bangun():
     needed_pasir = random.randint(0, 5)
     needed_batu = random.randint(0, 5)
     needed_air = random.randint(0, 5)
-    print(f"pasir: {needed_pasir} batu: {needed_batu} air: {needed_air}")
+    sisa_candi = 0
+    with open("candi.csv", 'r') as file_candi:
+        num_rows_candi = 1
+        for line in file_candi:
+            num_rows_candi += 1
+            print(num_rows_candi)
+
     if bahancukup(needed_pasir,needed_batu,needed_air):
-        pakai_pasir = jumlah[0] - needed_pasir
-        pakai_batu = jumlah[1] - needed_batu
-        pakai_air = jumlah[2] - needed_air
+        if num_rows_candi <= 101:
+            pakai_pasir = jumlah[0] - needed_pasir
+            pakai_batu = jumlah[1] - needed_batu
+            pakai_air = jumlah[2] - needed_air
 
-        edit("bahan_bangunan.csv", ["Pasir","dari pantai",str(pakai_pasir)],1)
-        edit("bahan_bangunan.csv", ["Batu","dari gunung",str(pakai_batu)],2)
-        edit("bahan_bangunan.csv", ["air","dari laut",str(pakai_air)],3)
+            edit("bahan_bangunan.csv", ["Pasir","dari pantai",str(pakai_pasir)],1)
+            edit("bahan_bangunan.csv", ["Batu","dari gunung",str(pakai_batu)],2)
+            edit("bahan_bangunan.csv", ["air","dari laut",str(pakai_air)],3)
 
-        global sisa_candi 
-        sisa_candi = sisa_candi - 1
+            sisa_candi = 101 - num_rows_candi
+            print("Candi berhasil dibangun." + f"\nSisa candi yang perlu dibangun: {sisa_candi}.")
 
+            global idjin
+            idjin += 1
+
+            write("candi.csv", [f"{idjin};{jin};{needed_pasir};{needed_batu};{needed_air}"])
         print("Candi berhasil dibangun." + f"\nSisa candi yang perlu dibangun: {sisa_candi}.")
-        
-        global idjin
-        idjin += 1
-
-        write("candi.csv", [f"{idjin};{jin};{needed_pasir};{needed_batu};{needed_air}"])
     else:
         print("Bahan bangunan tidak mencukupi.")
