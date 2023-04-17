@@ -76,7 +76,7 @@ def bangun():
     else:
         print("Bahan bangunan tidak mencukupi.")
 
-array_of_jin_pengumpul = []
+array_of_jin_pengumpul = ["Cacodemon", "Revenant", "Mancubus"]
 
 
 def batchkumpul():
@@ -95,5 +95,52 @@ def batchkumpul():
 
     else:
         print("Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
-        
+
 array_of_jin_pembangun = ["Cacodemon", "Revenant", "Mancubus"]
+
+
+def randomize():
+    a = random.randint(0, 5)
+    b = random.randint(0, 5)
+    c = random.randint(0, 5)
+    return a,b,c 
+
+def batchbangun():
+    jml_jin_pembangun = length(array_of_jin_pembangun)
+    sum_needed_pasir = 0
+    sum_needed_batu = 0
+    sum_needed_air = 0
+    cukup = False
+    if jml_jin_pembangun > 0:
+        for i in range(jml_jin_pembangun):
+            pasir, batu, air = randomize()
+            sum_needed_pasir += pasir
+            sum_needed_batu += batu
+            sum_needed_air += air
+            print(pasir,batu,air)
+            print(sum_needed_pasir,sum_needed_batu,sum_needed_air)
+            if bahancukup(sum_needed_pasir, sum_needed_batu, sum_needed_air):
+                write("candi.csv", [f"{idjin};{jin};{pasir};{batu};{air}"])
+
+        if bahancukup(sum_needed_pasir, sum_needed_batu, sum_needed_air):
+            with open("bahan_bangunan.csv", 'r') as csv_file:
+                data = csv_file.readlines()
+
+            pakai_pasir = int(data[1].split(";")[2].strip()) - sum_needed_pasir
+            pakai_batu = int(data[2].split(";")[2].strip()) - sum_needed_batu
+            pakai_air = int(data[3].split(";")[2].strip()) - sum_needed_air
+
+            edit("bahan_bangunan.csv", ["Pasir","dari pantai",str(pakai_pasir)],1)
+            edit("bahan_bangunan.csv", ["Batu","dari gunung",str(pakai_batu)],2)
+            edit("bahan_bangunan.csv", ["air","dari laut",str(pakai_air)],3)
+
+            cukup = True
+
+        print(f"Mengerahkan {jml_jin_pembangun} jin untuk membangun candi dengan total bahan {sum_needed_pasir} pasir, {sum_needed_batu} batu, dan {sum_needed_air} air.")
+        
+        if cukup == True:
+            print(f"Jin berhasil membangun total {jml_jin_pembangun} candi.")
+        else:
+            print("Bangun gagal.")
+    else:
+        print("Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")
